@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const LINKS = [
@@ -45,7 +46,7 @@ export function Footer() {
       </div>
       <div className="border-t border-brand-white/20">
         <div className="container-brand flex flex-col gap-3 py-5 text-xs text-brand-white/65 sm:flex-row sm:items-center sm:justify-between">
-          <span className="font-display text-2xl font-semibold text-brand-white">euckays.</span>
+          <span className="inline-flex w-fit items-center rounded-full bg-brand-cream px-4 py-2"><Image src="/images/logo/euckays-logo.png" alt="Euckays Industries" width={758} height={258} className="h-7 w-auto" /></span>
           <span>Made with care in Nigeria.</span>
           <span>© {new Date().getFullYear()} Euckays Industries LTD.</span>
         </div>

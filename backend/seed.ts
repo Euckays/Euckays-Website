@@ -29,7 +29,7 @@ const products = [
     size: "100ml",
     cautionInfo: "For external use only. Discontinue use if irritation occurs.",
     stock: 40,
-    images: ["/images/products/regrow-hair-growth-oil-1.svg"],
+    images: ["/images/product/image3.jpeg"],
   },
   {
     slug: "hair-grease",
@@ -101,7 +101,7 @@ const products = [
     size: "150g",
     cautionInfo: "Discontinue use if irritation occurs. Avoid contact with eyes.",
     stock: 70,
-    images: ["/images/products/honey-turmeric-black-soap-1.svg"],
+    images: ["/images/product/Image1.jpeg", "/images/product/image%204.jpeg"],
   },
   {
     slug: "glow-brightening-oil",
@@ -119,7 +119,7 @@ const products = [
     size: "30ml",
     cautionInfo: "Patch test before first use.",
     stock: 35,
-    images: ["/images/products/glow-brightening-oil-1.svg"],
+    images: ["/images/product/image2.jpeg"],
   },
   {
     slug: "haircare-bundle",
@@ -137,7 +137,7 @@ const products = [
     size: "4-piece set",
     cautionInfo: null,
     stock: 20,
-    images: ["/images/products/haircare-bundle-1.svg"],
+    images: ["/images/product/image6.jpeg"],
   },
   {
     slug: "skincare-bundle",
@@ -155,7 +155,7 @@ const products = [
     size: "2-piece set",
     cautionInfo: null,
     stock: 25,
-    images: ["/images/products/skincare-bundle-1.svg"],
+    images: ["/images/product/image5.jpeg"],
   },
 ];
 

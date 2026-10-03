@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CartIndicator } from "./CartIndicator";
 
@@ -16,12 +17,8 @@ export function Header() {
         Rooted in Nigeria. Made for your everyday ritual. <span aria-hidden="true">✳</span> Nationwide delivery
       </div>
       <div className="container-brand flex h-[78px] items-center justify-between gap-4">
-        <Link href="/" className="brand-mark flex shrink-0 items-center gap-3" aria-label="Euckays home">
-          <span className="brand-symbol flex h-10 w-10 items-center justify-center rounded-full border border-brand-emerald text-xl font-medium italic text-brand-emerald" aria-hidden="true">e.</span>
-          <span className="block">
-            <span className="block font-display text-[2rem] font-semibold leading-[0.74] tracking-[-0.07em]">euckays</span>
-            <span className="mt-1.5 block text-[0.48rem] font-semibold uppercase tracking-[0.33em] text-brand-emerald">farm to beauty</span>
-          </span>
+        <Link href="/" className="brand-mark flex shrink-0 items-center" aria-label="Euckays home">
+          <Image src="/images/logo/euckays-logo.png" alt="Euckays Industries" width={758} height={258} priority className="h-11 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">

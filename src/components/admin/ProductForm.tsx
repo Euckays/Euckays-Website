@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 import type { ProductFormState } from "@/app/admin/(dashboard)/products/actions";
 
 type ProductDefaults = {
@@ -191,16 +192,7 @@ export function ProductForm({
       </div>
 
       <div className="grid grid-cols-1 gap-4 rounded-2xl border border-brand-sand bg-brand-white p-6">
-        <label className="field">
-          <span>Image URLs (one per line)</span>
-          <textarea
-            name="images"
-            rows={3}
-            defaultValue={defaults.images.join("\n")}
-            className="input resize-none"
-            placeholder="/images/products/example.svg"
-          />
-        </label>
+        <ImageUploader defaultUrls={defaults.images} />
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <label className="field">
             <span>SEO Title (optional)</span>
