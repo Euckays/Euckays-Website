@@ -42,8 +42,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/src/generated/prisma
-
 # Local execution records and backups
 /.codex-artifacts/
 /.codex-backups/
@@ -52,5 +50,5 @@ next-env.d.ts
 /.windsurf/
 /skills-lock.json
 
-# Admin-uploaded product photos (local development storage)
+# Product photos uploaded locally before uploads moved to the backend service
 /public/images/uploads/

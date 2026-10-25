@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { prisma } from "@backend/lib/prisma";
+import { adminGet } from "@/lib/admin-session";
+import type { Order } from "@/lib/api-types";
 import { formatNaira } from "@/lib/money";
 import { OrderStatusSelect } from "@/components/admin/OrderStatusSelect";
 
@@ -9,7 +10,7 @@ export default async function AdminOrderDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const order = await prisma.order.findUnique({ where: { id }, include: { items: true } });
+  const order = (await adminGet<{ order: Order }>(`/admin/orders/${encodeURIComponent(id)}`))?.order;
   if (!order) notFound();
 
   return (
@@ -30,22 +31,22 @@ export default async function AdminOrderDetailPage({
                 <span>
                   {item.name} &times; {item.quantity}
                 </span>
-                <span>{formatNaira(Number(item.price) * item.quantity)}</span>
+                <span>{formatNaira(item.price * item.quantity)}</span>
               </li>
             ))}
           </ul>
           <div className="mt-4 space-y-1 text-sm text-brand-black/70">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>{formatNaira(Number(order.subtotal))}</span>
+              <span>{formatNaira(order.subtotal)}</span>
             </div>
             <div className="flex justify-between">
               <span>Delivery</span>
-              <span>{formatNaira(Number(order.deliveryFee))}</span>
+              <span>{formatNaira(order.deliveryFee)}</span>
             </div>
             <div className="flex justify-between text-base font-semibold text-brand-black">
               <span>Total</span>
-              <span>{formatNaira(Number(order.total))}</span>
+              <span>{formatNaira(order.total)}</span>
             </div>
           </div>
         </div>
@@ -70,7 +71,7 @@ export default async function AdminOrderDetailPage({
             <p className="mt-4 text-xs text-brand-black/40">Ref: {order.paymentReference}</p>
           )}
           <p className="mt-1 text-xs text-brand-black/40">
-            Placed {order.createdAt.toLocaleString("en-NG")}
+            Placed {new Date(order.createdAt).toLocaleString("en-NG")}
           </p>
         </div>
       </div>

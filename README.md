@@ -1,7 +1,12 @@
 # Euckays Industries LTD — Website
 
-Farm-to-Beauty e-commerce site for Euckays Industries LTD (Next.js 16, TypeScript,
-Tailwind CSS, Prisma + PostgreSQL, Paystack).
+Farm-to-Beauty e-commerce storefront for Euckays Industries LTD (Next.js 16, TypeScript,
+Tailwind CSS).
+
+The database, checkout, Paystack payments, admin authentication and product photo uploads live
+in a separate API service: [Euckays/Backend](https://github.com/Euckays/Backend). This app does
+not talk to the database. Its server code (pages, Server Actions, one route handler) calls the
+backend over HTTP through `src/lib/api.ts`; the browser never calls the backend directly.
 
 ## What's built (Phase 1: core storefront + checkout)
 
@@ -20,16 +25,21 @@ customer accounts, product reviews, ingredient library, loyalty/referrals, and o
 
 ## Getting started
 
+1. Set up and start the backend first (see its README): it listens on
+   [http://localhost:4000](http://localhost:4000) by default and needs PostgreSQL.
+2. Then the storefront:
+
 ```bash
 npm install
-cp .env.example .env   # fill in DATABASE_URL, ADMIN_SESSION_SECRET, etc.
-npx prisma db push     # create tables in your Postgres database
-npx prisma db seed     # seed sample products, delivery zones, and the admin user
+cp .env.example .env   # BACKEND_URL defaults to http://localhost:4000
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Admin dashboard is at `/admin`,
-using the `ADMIN_EMAIL` / `ADMIN_PASSWORD` you set before seeding.
+Open [http://localhost:3000](http://localhost:3000). The admin dashboard is at `/admin`; sign in
+with the `ADMIN_EMAIL` / `ADMIN_PASSWORD` the backend was seeded with.
+
+`npm run build` needs neither the backend nor any environment variables: every page that shows
+data renders per request, so nothing is fetched at build time.
 
 The development server uses `.next-dev` while production builds use `.next`, so
 running `npm run build` does not replace a live dev server's browser chunks. If an
@@ -38,14 +48,26 @@ after restarting `npm run dev`.
 
 ## Environment variables
 
-See `.env.example`. Notable ones:
+See `.env.example`:
 
-- `DATABASE_URL` — PostgreSQL connection string.
-- `ADMIN_SESSION_SECRET` — random secret for signing admin login sessions.
-- `PAYSTACK_SECRET_KEY` / `PAYSTACK_PUBLIC_KEY` — from the Paystack dashboard.
-  Use `sk_test_...` / `pk_test_...` while testing. Checkout pauses with an error
-  if the secret key is missing; it never marks an unpaid order as paid.
+- `BACKEND_URL` — URL of the backend API (server-side only, default `http://localhost:4000`).
+  On Vercel set it to the deployed backend's URL.
 - `NEXT_PUBLIC_WHATSAPP_NUMBER` — international format, no `+` (e.g. `2348012345678`).
+
+Database, admin-session, Paystack and storage settings belong to the backend.
+
+## How the storefront uses the backend
+
+- Pages fetch products and orders with `cache: "no-store"`; Server Actions (checkout, contact,
+  vendor form, admin product and order changes) post to the API.
+- Checkout: the backend creates the order and returns the Paystack payment URL; the browser is
+  sent there, and Paystack returns the shopper to the backend's `/paystack/callback`, which
+  verifies the payment and redirects to `/order-confirmation/<orderNumber>` here.
+- Admin sign-in: the login action exchanges the email and password for a token from
+  `POST /admin/login` and stores it in an httpOnly cookie (`euckays_admin_session`). Admin pages
+  and actions forward it as `Authorization: Bearer <token>`.
+- `src/app/api/admin/uploads/route.ts` forwards admin photo uploads to the backend with that
+  token, so the uploader in the product form only talks to this site.
 
 ## Real content still needed
 
@@ -57,19 +79,19 @@ Product image URLs can be updated in the admin product editor.
 
 ## Project structure
 
-- `backend/` contains Prisma schema/seed, database access, authentication, and payment integrations.
-- `src/app/` contains the storefront, admin UI, and Next.js-required route/action entrypoints.
-- `src/lib/` contains client-safe cart state and formatting utilities.
+- `src/app/` contains the storefront, the admin UI, Server Actions and the upload proxy route.
+- `src/lib/api.ts` is the server-only API client; `src/lib/admin-session.ts` handles the admin
+  cookie; `src/lib/api-types.ts` describes the API's responses.
+- `src/lib/` also contains client-safe cart state and formatting utilities.
 
 ## Notes for whoever works on this next
 
-- Data model: `backend/schema.prisma` (seed: `backend/seed.ts`).
-- Prisma 7 requires a driver adapter — see `backend/lib/prisma.ts`.
+- Data model, seed data and all business rules: the [backend repository](https://github.com/Euckays/Backend).
+- The Nigerian states list in `src/lib/nigeria.ts` must match the backend's copy.
 - This app is on Next.js 16, which has several breaking changes vs. earlier
   versions (async `params`/`searchParams`, Turbopack by default, `middleware` →
   `proxy`, etc.). The bundled docs at `node_modules/next/dist/docs/` are the source
   of truth, not general training data.
-- Production hardening before launch: real Paystack keys, a production
-  `ADMIN_SESSION_SECRET`, legal pages reviewed by counsel (NDPR), a Paystack
-  webhook URL configured in the dashboard, and image hosting for uploaded product
-  photos (currently the admin product form takes image URLs directly).
+- Production hardening before launch (mostly backend settings, see its README): real Paystack
+  keys, a production `ADMIN_SESSION_SECRET`, the Paystack webhook URL pointing at the backend,
+  a storage bucket for uploaded product photos, and legal pages reviewed by counsel (NDPR).

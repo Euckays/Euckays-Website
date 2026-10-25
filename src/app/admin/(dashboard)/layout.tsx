@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getAdminSession, destroyAdminSession } from "@backend/lib/admin-auth";
+import { clearAdminToken, getAdminSession } from "@/lib/admin-session";
 
 const NAV = [
   { href: "/admin", label: "Overview" },
@@ -16,7 +16,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
 
   async function logout() {
     "use server";
-    await destroyAdminSession();
+    await clearAdminToken();
     redirect("/admin/login");
   }
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getOrderByNumber } from "@backend/lib/orders";
+import { getOrderByNumber } from "@/lib/api";
 import { formatNaira } from "@/lib/money";
 import { ClearPaidOrderFromCart } from "@/components/checkout/ClearPaidOrderFromCart";
 

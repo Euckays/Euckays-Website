@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { prisma } from "@backend/lib/prisma";
+import { adminGet } from "@/lib/admin-session";
+import type { Product } from "@/lib/api-types";
 import { ProductForm } from "@/components/admin/ProductForm";
 import { updateProduct } from "../actions";
 
@@ -9,10 +10,7 @@ export default async function EditProductPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const product = await prisma.product.findUnique({
-    where: { id },
-    include: { images: { orderBy: { position: "asc" } } },
-  });
+  const product = (await adminGet<{ product: Product }>(`/admin/products/${encodeURIComponent(id)}`))?.product;
   if (!product) notFound();
 
   const boundAction = updateProduct.bind(null, product.id);
@@ -28,8 +26,8 @@ export default async function EditProductPage({
             name: product.name,
             slug: product.slug,
             category: product.category,
-            price: Number(product.price),
-            compareAtPrice: product.compareAtPrice ? Number(product.compareAtPrice) : null,
+            price: product.price,
+            compareAtPrice: product.compareAtPrice,
             shortDescription: product.shortDescription,
             description: product.description,
             keyBenefits: product.keyBenefits,

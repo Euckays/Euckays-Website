@@ -1,7 +1,18 @@
 "use server";
 
-import { submitContactMessage as performSubmitContactMessage } from "@backend/actions/contact";
+import { apiRequest } from "@/lib/api";
 
-export async function submitContactMessage(...args: Parameters<typeof performSubmitContactMessage>): ReturnType<typeof performSubmitContactMessage> {
-  return performSubmitContactMessage(...args);
+export type ContactMessageInput = {
+  name: string;
+  email: string;
+  phone?: string;
+  subject?: string;
+  message: string;
+};
+
+export async function submitContactMessage(
+  input: ContactMessageInput
+): Promise<{ success: true } | { success: false; error: string }> {
+  const result = await apiRequest("/contact", { method: "POST", body: input });
+  return result.ok ? { success: true } : { success: false, error: result.error };
 }

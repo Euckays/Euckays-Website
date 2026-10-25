@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { prisma } from "@backend/lib/prisma";
+import { adminGet } from "@/lib/admin-session";
+import type { Product } from "@/lib/api-types";
 import { formatNaira } from "@/lib/money";
 import { DeleteProductButton } from "@/components/admin/DeleteProductButton";
 
 export default async function AdminProductsPage() {
-  const products = await prisma.product.findMany({
-    orderBy: { createdAt: "desc" },
-    include: { images: true },
-  });
+  const products = (await adminGet<{ products: Product[] }>("/admin/products"))?.products ?? [];
 
   return (
     <div>
@@ -48,7 +46,7 @@ export default async function AdminProductsPage() {
                 <td className="px-4 py-3 text-brand-black/70">
                   {p.category === "HAIRCARE" ? "Haircare" : "Skincare"}
                 </td>
-                <td className="px-4 py-3 text-brand-black/70">{formatNaira(Number(p.price))}</td>
+                <td className="px-4 py-3 text-brand-black/70">{formatNaira(p.price)}</td>
                 <td className="px-4 py-3 text-brand-black/70">{p.stock}</td>
                 <td className="px-4 py-3">
                   <span

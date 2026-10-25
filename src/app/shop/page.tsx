@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getActiveProducts } from "@backend/lib/products";
+import { getActiveProducts } from "@/lib/api";
 import { ProductCard } from "@/components/shop/ProductCard";
 
 export const metadata: Metadata = {

@@ -1,7 +1,8 @@
-import { prisma } from "@backend/lib/prisma";
+import { adminGet } from "@/lib/admin-session";
+import type { ContactMessage } from "@/lib/api-types";
 
 export default async function AdminMessagesPage() {
-  const messages = await prisma.contactMessage.findMany({ orderBy: { createdAt: "desc" } });
+  const messages = (await adminGet<{ messages: ContactMessage[] }>("/admin/messages"))?.messages ?? [];
 
   return (
     <div>
@@ -11,7 +12,7 @@ export default async function AdminMessagesPage() {
           <div key={m.id} className="rounded-2xl border border-brand-sand bg-brand-white p-5">
             <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
               <span className="font-medium text-brand-black">{m.name}</span>
-              <span className="text-brand-black/50">{m.createdAt.toLocaleString("en-NG")}</span>
+              <span className="text-brand-black/50">{new Date(m.createdAt).toLocaleString("en-NG")}</span>
             </div>
             <p className="mt-1 text-xs text-brand-black/50">
               {m.email} {m.phone ? `· ${m.phone}` : ""}

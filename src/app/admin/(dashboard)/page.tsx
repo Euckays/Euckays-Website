@@ -1,27 +1,19 @@
 import Link from "next/link";
-import { prisma } from "@backend/lib/prisma";
+import { adminGet } from "@/lib/admin-session";
+import type { AdminOverview } from "@/lib/api-types";
 import { formatNaira } from "@/lib/money";
 
 export default async function AdminOverviewPage() {
-  const [productCount, pendingOrders, paidOrders, lowStock, messageCount, vendorCount, revenueAgg] =
-    await Promise.all([
-      prisma.product.count(),
-      prisma.order.count({ where: { status: "PENDING_PAYMENT" } }),
-      prisma.order.count({ where: { status: { in: ["PAID", "PROCESSING", "READY_FOR_DISPATCH", "SHIPPED", "DELIVERED"] } } }),
-      prisma.product.count({ where: { stock: { lte: 5 } } }),
-      prisma.contactMessage.count(),
-      prisma.vendorApplication.count(),
-      prisma.order.aggregate({
-        _sum: { total: true },
-        where: { status: { in: ["PAID", "PROCESSING", "READY_FOR_DISPATCH", "SHIPPED", "DELIVERED"] } },
-      }),
-    ]);
+  const overview = await adminGet<AdminOverview>("/admin/overview");
+  if (!overview) throw new Error("Admin overview is unavailable");
+  const { productCount, pendingOrders, paidOrders, lowStock, lowStockThreshold, messageCount, vendorCount, revenue } =
+    overview;
 
   const stats = [
     { label: "Products", value: productCount, href: "/admin/products" },
     { label: "Paid Orders", value: paidOrders, href: "/admin/orders" },
     { label: "Pending Payment", value: pendingOrders, href: "/admin/orders" },
-    { label: "Low Stock (≤5)", value: lowStock, href: "/admin/products" },
+    { label: `Low Stock (≤${lowStockThreshold})`, value: lowStock, href: "/admin/products" },
     { label: "Contact Messages", value: messageCount, href: "/admin/messages" },
     { label: "Vendor Applications", value: vendorCount, href: "/admin/vendors" },
   ];
@@ -33,7 +25,7 @@ export default async function AdminOverviewPage() {
       <div className="mt-6 rounded-2xl border border-brand-sand bg-brand-white p-6">
         <p className="text-sm text-brand-black/60">Total Revenue (paid orders)</p>
         <p className="mt-1 text-3xl font-semibold text-brand-emerald">
-          {formatNaira(Number(revenueAgg._sum.total ?? 0))}
+          {formatNaira(revenue)}
         </p>
       </div>
 

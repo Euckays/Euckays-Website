@@ -1,7 +1,9 @@
-import { prisma } from "@backend/lib/prisma";
+import { adminGet } from "@/lib/admin-session";
+import type { VendorApplication } from "@/lib/api-types";
 
 export default async function AdminVendorsPage() {
-  const applications = await prisma.vendorApplication.findMany({ orderBy: { createdAt: "desc" } });
+  const applications =
+    (await adminGet<{ applications: VendorApplication[] }>("/admin/vendor-applications"))?.applications ?? [];
 
   return (
     <div>

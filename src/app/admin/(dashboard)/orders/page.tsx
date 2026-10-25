@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { prisma } from "@backend/lib/prisma";
+import { adminGet } from "@/lib/admin-session";
+import type { Order } from "@/lib/api-types";
 import { formatNaira } from "@/lib/money";
 
 const STATUS_STYLE: Record<string, string> = {
@@ -14,10 +15,7 @@ const STATUS_STYLE: Record<string, string> = {
 };
 
 export default async function AdminOrdersPage() {
-  const orders = await prisma.order.findMany({
-    orderBy: { createdAt: "desc" },
-    include: { items: true },
-  });
+  const orders = (await adminGet<{ orders: Order[] }>("/admin/orders"))?.orders ?? [];
 
   return (
     <div>
@@ -45,14 +43,14 @@ export default async function AdminOrdersPage() {
                 </td>
                 <td className="px-4 py-3 text-brand-black/70">{o.customerName}</td>
                 <td className="px-4 py-3 text-brand-black/70">{o.items.length}</td>
-                <td className="px-4 py-3 text-brand-black/70">{formatNaira(Number(o.total))}</td>
+                <td className="px-4 py-3 text-brand-black/70">{formatNaira(o.total)}</td>
                 <td className="px-4 py-3">
                   <span className={`rounded-full px-2 py-1 text-xs ${STATUS_STYLE[o.status]}`}>
                     {o.status.replaceAll("_", " ")}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-brand-black/50">
-                  {o.createdAt.toLocaleDateString("en-NG")}
+                  {new Date(o.createdAt).toLocaleDateString("en-NG")}
                 </td>
               </tr>
             ))}

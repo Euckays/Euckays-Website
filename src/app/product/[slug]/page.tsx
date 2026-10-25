@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getProductBySlug } from "@backend/lib/products";
+import { getProductBySlug } from "@/lib/api";
 import { AddToCartForm } from "@/components/product/AddToCartForm";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

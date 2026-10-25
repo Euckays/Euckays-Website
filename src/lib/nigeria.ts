@@ -1,3 +1,4 @@
+// Keep in sync with the backend's src/lib/nigeria.ts (it validates checkout states and owns delivery fees).
 export const NIGERIAN_STATES = [
   "Abia",
   "Adamawa",
@@ -37,5 +38,3 @@ export const NIGERIAN_STATES = [
   "Yobe",
   "Zamfara",
 ] as const;
-
-export const DEFAULT_DELIVERY_FEE = 3500;
