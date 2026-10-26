@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CartIndicator } from "./CartIndicator";
+import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
 
 const NAV_LINKS = [
   { href: "/shop", label: "Shop all" },
@@ -14,7 +15,7 @@ export function Header() {
   return (
     <header className="site-header sticky top-0 z-40 bg-brand-cream/95 backdrop-blur-md">
       <div className="announcement-bar py-2 text-center text-[0.65rem] font-medium tracking-[0.13em] text-brand-white sm:text-xs">
-        Rooted in Nigeria. Made for your everyday ritual. <span aria-hidden="true">✳</span> Nationwide delivery
+        Rooted in Nigeria. Made for your everyday ritual. Nationwide delivery
       </div>
       <div className="container-brand flex h-[78px] items-center justify-between gap-4">
         <Link href="/" className="brand-mark flex shrink-0 items-center" aria-label="Euckays home">
@@ -43,7 +44,7 @@ export function Header() {
               {NAV_LINKS.map((link) => (
                 <Link key={link.label} href={link.href} className="border-b border-brand-sand/70 px-2 py-3 text-sm last:border-0 hover:text-brand-emerald">{link.label}</Link>
               ))}
-              <Link href="/contact" className="mt-3 px-2 py-2 text-sm text-brand-emerald">Contact us ↗</Link>
+              <Link href="/contact" className="mt-3 px-2 py-2 text-sm text-brand-emerald">Contact us <ArrowUpRight /></Link>
             </nav>
           </details>
         </div>

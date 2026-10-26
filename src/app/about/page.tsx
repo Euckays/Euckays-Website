@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
 
 export const metadata: Metadata = {
   title: "Our Story",
@@ -29,7 +30,7 @@ export default function AboutPage() {
           <div><span className="font-display text-3xl text-brand-earth">03</span><h3 className="font-display mt-4 text-4xl">Local possibility</h3><p className="mt-3 text-sm leading-7 text-brand-black/65">We believe Nigerian-made beauty can be imaginative, useful and rooted in its origin.</p></div>
         </div></div>
       </section>
-      <section className="section-space bg-brand-emerald text-center text-brand-white"><div className="container-brand flex flex-col items-center"><p className="eyebrow text-brand-lime">Explore our approach</p><h2 className="font-display mt-4 max-w-3xl text-5xl leading-[.95] sm:text-7xl">From the land to your ritual.</h2><Link href="/farm-to-beauty" className="mt-8 inline-flex border-b border-brand-white pb-2 text-xs font-semibold uppercase tracking-[.15em]">Discover farm-to-beauty ↗</Link></div></section>
+      <section className="section-space bg-brand-emerald text-center text-brand-white"><div className="container-brand flex flex-col items-center"><p className="eyebrow text-brand-lime">Explore our approach</p><h2 className="font-display mt-4 max-w-3xl text-5xl leading-[.95] sm:text-7xl">From the land to your ritual.</h2><Link href="/farm-to-beauty" className="mt-8 inline-flex border-b border-brand-white pb-2 text-xs font-semibold uppercase tracking-[.15em]">Discover farm-to-beauty <ArrowUpRight /></Link></div></section>
     </div>
   );
 }

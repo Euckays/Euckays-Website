@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { formatNaira } from "@/lib/money";
+import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
 
 type Props = {
   product: {
@@ -32,7 +33,7 @@ export function ProductCard({ product }: Props) {
         <p className="eyebrow text-brand-emerald">{category}</p>
         <div className="mt-2 flex items-start justify-between gap-2">
           <h3 className="font-display text-[1.65rem] font-medium leading-[1.05] sm:text-[1.9rem]">{product.name}</h3>
-          <span className="mt-0.5 text-lg text-brand-emerald transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true">↗</span>
+          <span className="mt-0.5 text-lg text-brand-emerald transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true"><ArrowUpRight /></span>
         </div>
         <p className="mt-2 line-clamp-2 text-xs leading-5 text-brand-black/60 sm:text-sm">{product.shortDescription}</p>
         <div className="mt-auto flex flex-wrap items-baseline gap-2 pt-5 text-sm font-semibold">

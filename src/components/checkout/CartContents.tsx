@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { formatNaira } from "@/lib/money";
+import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
 
 export function CartContents() {
   const { items, hydrated, updateQuantity, removeItem, subtotal, itemCount } = useCart();
@@ -33,7 +34,7 @@ export function CartContents() {
               </p>
             </div>
             <Link href="/shop" className="text-sm font-medium text-brand-emerald underline underline-offset-4 hover:text-brand-black">
-              Continue shopping ↗
+              Continue shopping <ArrowUpRight />
             </Link>
           </div>
         </div>

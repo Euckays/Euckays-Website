@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
 
 const LINKS = [
   { title: "Explore", items: [
@@ -31,7 +32,7 @@ export function Footer() {
           <p className="eyebrow text-brand-lime">From our roots to yours</p>
           <h2 className="font-display mt-5 max-w-xl text-5xl leading-[0.96] tracking-[-0.045em] sm:text-6xl">A little more nature in every day.</h2>
           <p className="mt-6 max-w-md text-sm leading-7 text-brand-white/75">Considered care for your hair and skin, made with an appreciation for the ingredients and people behind every ritual.</p>
-          <Link href="/shop" className="footer-cta mt-8 inline-flex items-center gap-3 border-b border-brand-white pb-2 text-xs font-semibold uppercase tracking-[0.15em]">Explore the collection <span aria-hidden="true">↗</span></Link>
+          <Link href="/shop" className="footer-cta mt-8 inline-flex items-center gap-3 border-b border-brand-white pb-2 text-xs font-semibold uppercase tracking-[0.15em]">Explore the collection <span aria-hidden="true"><ArrowUpRight /></span></Link>
         </div>
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
           {LINKS.map((group) => (

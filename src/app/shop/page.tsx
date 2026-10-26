@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getActiveProducts } from "@/lib/api";
 import { ProductCard } from "@/components/shop/ProductCard";
+import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -41,7 +42,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       </div>
       <section className="section-space bg-brand-cream">
         <div className="container-brand">
-          {products.length ? <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4">{products.map((product) => <ProductCard key={product.slug} product={product} />)}</div> : <div className="mx-auto max-w-lg border border-brand-sand bg-brand-white p-10 text-center"><h2 className="font-display text-4xl">Nothing here just yet.</h2><p className="mt-3 text-sm text-brand-black/60">Try another search or browse the full collection.</p><Link href="/shop" className="button-primary mt-7">Browse all products ↗</Link></div>}
+          {products.length ? <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4">{products.map((product) => <ProductCard key={product.slug} product={product} />)}</div> : <div className="mx-auto max-w-lg border border-brand-sand bg-brand-white p-10 text-center"><h2 className="font-display text-4xl">Nothing here just yet.</h2><p className="mt-3 text-sm text-brand-black/60">Try another search or browse the full collection.</p><Link href="/shop" className="button-primary mt-7">Browse all products <ArrowUpRight /></Link></div>}
         </div>
       </section>
     </div>
