@@ -21,10 +21,10 @@ export function ProductCard({ product }: Props) {
 
   return (
     <Link href={`/product/${product.slug}`} className="product-card group flex min-w-0 flex-col text-brand-black">
-      <div className="relative aspect-[4/4.35] overflow-hidden bg-brand-lime">
+      <div className="relative aspect-[4/4.35] overflow-hidden bg-brand-white">
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={image.url} alt={image.altText} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
+          <img src={image.url} alt={image.altText} className="h-full w-full object-contain p-3 transition duration-500 group-hover:scale-[1.04]" />
         ) : <div className="h-full w-full bg-brand-lime" />}
         {outOfStock && <span className="absolute inset-0 flex items-center justify-center bg-brand-black/65 font-display text-3xl text-white">Coming back soon</span>}
       </div>

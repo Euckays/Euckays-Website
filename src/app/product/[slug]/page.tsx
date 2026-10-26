@@ -22,9 +22,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <nav className="border-b border-brand-sand bg-brand-white" aria-label="Breadcrumb"><div className="container-brand flex items-center gap-2 py-4 text-xs text-brand-black/60"><Link href="/shop" className="hover:text-brand-emerald">Shop</Link><span aria-hidden="true">/</span><Link href={`/shop?category=${product.category}`} className="hover:text-brand-emerald">{product.category === "HAIRCARE" ? "Haircare" : "Skincare"}</Link><span aria-hidden="true">/</span><span className="truncate text-brand-black">{product.name}</span></div></nav>
       <section className="border-b border-brand-sand bg-brand-cream py-10 sm:py-16">
         <div className="container-brand grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
-          <div className="aspect-square overflow-hidden bg-brand-lime">{image ? (
+          <div className="aspect-square overflow-hidden bg-brand-white">{image ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={image.url} alt={image.altText} className="h-full w-full object-cover" />
+            <img src={image.url} alt={image.altText} className="h-full w-full object-contain p-4 sm:p-8" />
           ) : <div className="h-full w-full bg-brand-lime" />}</div>
           <div className="lg:sticky lg:top-36 lg:self-start">
             <p className="eyebrow text-brand-emerald">{product.category === "HAIRCARE" ? "Haircare" : "Skincare"} · {product.size}</p>
