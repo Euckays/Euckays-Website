@@ -53,6 +53,15 @@ body { background: var(--background); color: var(--foreground); font-family: var
 .section-space { padding-block: clamp(4.5rem, 8vw, 8rem); }
 .section-heading { max-width: 48rem; font-family: var(--font-display), Georgia, serif; font-size: clamp(3.1rem, 5.3vw, 5.5rem); font-weight: 500; letter-spacing: -.055em; line-height: .98; }
 .announcement-bar { background: var(--color-brand-emerald); }
+/* Phones: the message scrolls without stopping. Two copies loop seamlessly by moving exactly one copy's width. */
+@keyframes announcement-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.announcement-track { display: flex; width: max-content; animation: announcement-scroll 18s linear infinite; }
+.announcement-track > span { padding-right: 3rem; white-space: nowrap; }
+@media (min-width: 640px) {
+  .announcement-track { width: auto; justify-content: center; animation: none; }
+  .announcement-track > span { padding-right: 0; }
+  .announcement-track > span[aria-hidden="true"] { display: none; }
+}
 .site-header { border-bottom: 1px solid var(--color-brand-sand); }
 .brand-mark:hover .brand-symbol { background: var(--color-brand-emerald); color: var(--color-brand-white); }
 .brand-symbol { transition: background 180ms ease, color 180ms ease; }
@@ -100,4 +109,8 @@ body { background: var(--background); color: var(--foreground); font-family: var
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  /* An infinite loop at .01ms would flicker; show the message still and wrapped instead. */
+  .announcement-track { width: auto; justify-content: center; animation: none !important; }
+  .announcement-track > span { padding-inline: 1rem; white-space: normal; text-align: center; }
+  .announcement-track > span[aria-hidden="true"] { display: none; }
 }

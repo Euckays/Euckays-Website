@@ -14,8 +14,11 @@ const NAV_LINKS = [
 export function Header() {
   return (
     <header className="site-header sticky top-0 z-40 bg-brand-cream/95 backdrop-blur-md">
-      <div className="announcement-bar py-2 text-center text-[0.65rem] font-medium tracking-[0.13em] text-brand-white sm:text-xs">
-        Rooted in Nigeria. Made for your everyday ritual. Nationwide delivery
+      <div className="announcement-bar overflow-hidden py-2 text-[0.65rem] font-medium tracking-[0.13em] text-brand-white sm:text-xs">
+        <div className="announcement-track">
+          <span>Rooted in Nigeria. Made for your everyday ritual. Nationwide delivery</span>
+          <span aria-hidden="true">Rooted in Nigeria. Made for your everyday ritual. Nationwide delivery</span>
+        </div>
       </div>
       <div className="container-brand flex h-[78px] items-center justify-between gap-4">
         <Link href="/" className="brand-mark flex shrink-0 items-center" aria-label="Euckays home">
