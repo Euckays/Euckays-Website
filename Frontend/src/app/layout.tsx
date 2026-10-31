@@ -8,7 +8,7 @@ import { CartProvider } from "@/lib/cart-context";
 
 const display = Cormorant_Garamond({
   variable: "--font-display",
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
   subsets: ["latin"],
 });
 
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-brand-cream text-brand-black">
+      <body className="flex min-h-full flex-col bg-white text-brand-black">
         <CartProvider>
           <Header />
           <main className="flex-1">{children}</main>
